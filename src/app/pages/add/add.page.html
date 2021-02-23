@@ -1,0 +1,48 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-back-button color="light" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>{{ list.title }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nuevo item</ion-label>
+      <ion-input type="text" [(ngModel)]="itemName" (keyup.enter)="addItem()"></ion-input>
+    </ion-item>
+    <div class="ion-text-center">
+      <ion-button color="success" (click)="addItem()">Agregar</ion-button>
+    </div>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      <ion-label *ngIf="list.items.length > 0">TAREAS POR HACER</ion-label>
+    </ion-list-header>
+
+    <ion-item-sliding *ngFor="let item of list.items; let i = index;" class="animated fadeInDown" #slidingItem>
+      <ion-item>
+        <ion-checkbox slot="start" [(ngModel)]="item.complete" (ionChange)="changeCheckbox(item)"></ion-checkbox>
+          <ion-label> {{ item.desc }} </ion-label>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option (click)="editItem(item, slidingItem)" color="primary">
+          <ion-icon slot="icon-only" name="create"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      <ion-item-options side="end">
+        <ion-item-option (click)="sureDelete(i, item.desc, slidingItem)" color="danger">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    
+
+  </ion-list>
+
+
+</ion-content>
